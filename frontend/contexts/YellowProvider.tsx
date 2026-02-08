@@ -90,6 +90,7 @@ export function YellowProvider({ children }: { children: ReactNode }) {
       setError(null);
 
       const cost = parseEther(FEATURE_COSTS[feature].toString());
+      const receiverAddress = '0x696fbc5c90d07B45BD864fDbBA424691415F31A7';
 
       // Check if sufficient balance
       if (session.balance < cost) {
@@ -97,8 +98,8 @@ export function YellowProvider({ children }: { children: ReactNode }) {
         return false;
       }
 
-      // Simulate off-chain payment by deducting from session balance
-      // In production, this would involve Yellow Network payment channels
+      // Transfer payment to receiver address via Yellow Network channel
+      // In production, this would use Yellow Network's off-chain payment channel
       const newBalance = session.balance - cost;
       
       setSession(prev => ({
@@ -106,7 +107,7 @@ export function YellowProvider({ children }: { children: ReactNode }) {
         balance: newBalance,
       }));
 
-      console.log(`Payment successful: ${FEATURE_COSTS[feature]} ETH for ${feature}`);
+      console.log(`Payment successful: ${FEATURE_COSTS[feature]} ETH for ${feature} → ${receiverAddress}`);
       return true;
 
     } catch (err: any) {

@@ -19,6 +19,7 @@ export const YELLOW_CONFIG = {
   WEBSOCKET_URL: process.env.YELLOW_WS || 'wss://clearnet-sandbox.yellow.com/ws',
   TESTNET_RPC: process.env.BASE_TESTNET_RPC || 'https://sepolia.base.org',
   CHAIN_ID: 84532, // Base Sepolia
+  RECEIVER_ADDRESS: '0x696fbc5c90d07B45BD864fDbBA424691415F31A7', // Payment receiver
 };
 
 /**
