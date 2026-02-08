@@ -1,0 +1,19 @@
+{
+  "name": "blockend",
+  "version": "1.0.0",
+  "description": "Smart contracts for Compx",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:local": "hardhat ignition deploy ./ignition/modules/SimilarityChecker.ts --network hardhat",
+    "deploy:baseSepolia": "hardhat ignition deploy ./ignition/modules/SimilarityChecker.ts --network baseSepolia"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.2.4"
+  }
+}
