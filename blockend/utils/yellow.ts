@@ -27,21 +27,22 @@ export const YELLOW_CONFIG = {
  * This creates a client for interacting with Yellow Network's state channels
  * 
  * @param walletClient - Viem wallet client with account
+ * @param publicClient - Viem public client for reading blockchain data
  * @returns Nitrolite client instance
  */
-export async function createYellowClient(walletClient: any) {
+export async function createYellowClient(walletClient: any, publicClient: any) {
   // Dynamic import to avoid build issues if package not installed yet
   try {
-    const { createNitroliteClient, WalletStateSigner } = await import('@erc7824/nitrolite');
+    const { NitroliteClient, WalletStateSigner } = await import('@erc7824/nitrolite');
     
     // Create state signer for off-chain operations
     const stateSigner = new WalletStateSigner(walletClient);
     
-    // Create Nitrolite client
-    const nitroliteClient = await createNitroliteClient({
-      websocketUrl: YELLOW_CONFIG.WEBSOCKET_URL,
-      signer: stateSigner,
-      chainId: YELLOW_CONFIG.CHAIN_ID,
+    // Create Nitrolite client with required config
+    const nitroliteClient = new NitroliteClient({
+      walletClient,
+      publicClient,
+      stateSigner,
     });
     
     return nitroliteClient;
