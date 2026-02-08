@@ -24,6 +24,12 @@ const nextConfig: NextConfig = {
         '@safe-global/safe-apps-provider': false,
         '@walletconnect/ethereum-provider': false,
       };
+      
+      // Suppress porto warnings completely
+      config.ignoreWarnings = [
+        { module: /porto/ },
+        { module: /porto\/internal/ },
+      ];
     }
     
     // Externalize ws and related packages for all builds

@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useAccount, useWalletClient, usePublicClient } from 'wagmi';
-import { createYellowClient, createSession, getSessionBalance, FEATURE_COSTS } from '@/blockend/utils/yellow';
-import { parseEther } from 'viem';
+import { createYellowClient, FEATURE_COSTS } from '@/blockend/utils/yellow';
+import { parseEther, formatEther, Address } from 'viem';
 
 interface YellowSessionData {
   sessionId: string | null;
@@ -48,20 +48,39 @@ export function YellowProvider({ children }: { children: ReactNode }) {
       setIsLoading(true);
       setError(null);
 
-      // Create Yellow Network client
+      console.log('Creating Yellow Network session...');
+      
+      // Create Yellow Network Nitrolite client
       const yellowClient = await createYellowClient(walletClient, publicClient);
       
-      // Create session with initial deposit (0.1 ETH)
-      const initialDeposit = parseEther('0.1');
-      const sessionData = await createSession(yellowClient, initialDeposit);
-
+      // For Yellow Network, we need to:
+      // 1. Get ytest.usd token address for Base Sepolia
+      // 2. Deposit tokens to custody contract
+      // 3. Create a payment channel
+      
+      // Yellow Test USD token address on Base Sepolia
+      const ytestUsdToken = '0x...' as Address; // NEED TOKEN ADDRESS
+      
+      // Initial deposit amount
+      const depositAmount = parseEther('0.1');
+      
+      // First approve the custody contract to spend tokens
+      await yellowClient.approveTokens(ytestUsdToken, depositAmount);
+      
+      // Deposit tokens to custody
+      await yellowClient.deposit(ytestUsdToken, depositAmount);
+      
+      // Get balance after deposit
+      const balance = await yellowClient.getAccountBalance(ytestUsdToken);
+      
       setSession({
-        sessionId: sessionData.channelId,
-        balance: sessionData.balance,
+        sessionId: 'active',
+        balance: balance,
         isActive: true,
       });
 
-      console.log('Yellow session created:', sessionData.channelId);
+      console.log('✅ Yellow session created');
+      console.log('💰 Balance:', formatEther(balance), 'ytest.usd');
     } catch (err: any) {
       console.error('Failed to create Yellow session:', err);
       setError(err.message || 'Failed to create payment session');
