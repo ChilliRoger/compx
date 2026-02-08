@@ -14,9 +14,24 @@ const nextConfig: NextConfig = {
         ws: false,
         'utf-8-validate': false,
         'bufferutil': false,
+        '@base-org/account': false,
+        '@coinbase/wallet-sdk': false,
+        '@gemini-wallet/core': false,
+        '@metamask/sdk': false,
+        'porto': false,
+        'porto/internal': false,
+        '@safe-global/safe-apps-sdk': false,
+        '@safe-global/safe-apps-provider': false,
+        '@walletconnect/ethereum-provider': false,
       };
     }
-    config.externals.push('pino-pretty', 'lokijs', 'encoding', 'ws', 'utf-8-validate', 'bufferutil');
+    
+    // Externalize ws and related packages for all builds
+    config.externals = config.externals || [];
+    if (Array.isArray(config.externals)) {
+      config.externals.push('pino-pretty', 'lokijs', 'encoding', 'ws');
+    }
+    
     return config;
   },
 };

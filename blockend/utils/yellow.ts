@@ -43,6 +43,14 @@ export async function createYellowClient(walletClient: any, publicClient: any) {
       walletClient,
       publicClient,
       stateSigner,
+      addresses: {
+        // Yellow Network contract addresses on Base Sepolia
+        // These should be fetched from Yellow Network documentation
+        custody: '0x0000000000000000000000000000000000000000', // Placeholder
+        adjudicator: '0x0000000000000000000000000000000000000000', // Placeholder
+      },
+      chainId: YELLOW_CONFIG.CHAIN_ID,
+      challengeDuration: 7200n, // 2 hours in seconds
     });
     
     return nitroliteClient;
