@@ -74,6 +74,4 @@ npm run dev
 
 Built for the Yellow Network prize track at ETHGlobal's HackMoney 2026.
 
-## License
-
-MIT
+Contributions are accepted.
