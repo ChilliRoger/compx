@@ -61,14 +61,6 @@ npm run dev
 
 5. Open [http://localhost:3000](http://localhost:3000)
 
-## Development Roadmap
-
-- [x] Step 1: Project setup and initialization
-- [ ] Step 2: Backend APIs + Smart contracts + Simple UI
-- [ ] Step 3: Wallet connection + GitHub similarity feature
-- [ ] Step 4: On-chain contract comparison feature
-- [ ] Step 5: Full frontend polish + deployment
-- [ ] Step 6: Testing + hackathon submission
 
 ## Hackathon: HackMoney 2026
 
